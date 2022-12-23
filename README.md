@@ -1,2 +1,2 @@
-# studyGO
+# htd web framework
 learning go
