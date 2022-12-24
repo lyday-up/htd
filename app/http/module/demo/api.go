@@ -1,9 +1,8 @@
 package demo
 
 import (
-	"fmt"
-
 	demoService "github.com/htd/app/provider/demo"
+	"github.com/htd/framework/contract"
 	"github.com/htd/framework/gin"
 )
 
@@ -18,5 +17,8 @@ func Register(r *gin.Engine) error {
 func Demo(c *gin.Context) {
 	demoProvider := c.MustMake(demoService.DemoKey).(demoService.IService)
 	s := demoProvider.GetHello()
+	configService := c.MustMake(contract.ConfigKey).(contract.Config)
+	password := configService.GetString("database.mysql.password")
+	c.JSON(200, password)
 	c.ISetOkStatus().IJson(s)
 }
