@@ -17,6 +17,8 @@ func Register(r *gin.Engine) error {
 func Demo(c *gin.Context) {
 	demoProvider := c.MustMake(demoService.DemoKey).(demoService.IService)
 	s := demoProvider.GetHello()
+	logger := c.MustMakeLog()
+	logger.Info(c, "demo success", nil)
 	configService := c.MustMake(contract.ConfigKey).(contract.Config)
 	password := configService.GetString("database.mysql.password")
 	c.JSON(200, password)
