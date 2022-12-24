@@ -5,7 +5,7 @@ import (
 	"github.com/htd/framework/contract"
 )
 
-// htdAppProvider 提供App的具体实现方法
+// HtdAppProvider 提供App的具体实现方法
 type HtdAppProvider struct {
 	BaseFolder string
 }
