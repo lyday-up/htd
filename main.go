@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/htd/framework/provider/log"
+	"github.com/htd/framework/provider/zaplog"
 
 	"github.com/htd/app/console"
 	"github.com/htd/app/http"
@@ -21,6 +22,7 @@ func main() {
 	container.Bind(&env.HtdEnvProvider{})
 	container.Bind(&config.HtdConfigProvider{})
 	container.Bind(&log.HtdLogServiceProvider{})
+	container.Bind(&zaplog.HtdZapServiceProvider{})
 
 	// 将HTTP引擎初始化,并且作为服务提供者绑定到服务容器中
 	if engine, err := http.NewHttpEngine(container); err == nil {

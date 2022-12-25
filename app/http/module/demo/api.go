@@ -17,11 +17,12 @@ func Register(r *gin.Engine) error {
 func Demo(c *gin.Context) {
 	demoProvider := c.MustMake(demoService.DemoKey).(demoService.IService)
 	s := demoProvider.GetHello()
-<<<<<<< HEAD
 	logger := c.MustMakeLog()
 	logger.Info(c, "demo success", nil)
-=======
->>>>>>> 7d88a7a479f42afd929b4f27c01d1e84dece9a23
+
+	zaplog := c.MustMakeZapLog()
+	zaplog.Info("zap log ok")
+
 	configService := c.MustMake(contract.ConfigKey).(contract.Config)
 	password := configService.GetString("database.mysql.password")
 	c.JSON(200, password)

@@ -1,6 +1,6 @@
 path:
-  log_folder: "/home/ly/htd/storage/log/"
-  runtime_folder: "/home/ly/htd/storag/runtime/"
+  log_folder: "/Users/ly/htd/storage/log/"
+  runtime_folder: "/Users/ly/htd/storag/runtime/"
 
 dev_fresh: 1
 

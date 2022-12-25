@@ -157,3 +157,10 @@ func (app *HtdApp) AppFolder() string {
 	}
 	return filepath.Join(app.BaseFolder(), "app")
 }
+
+func (app *HtdApp) AppLogEncoder() string {
+	if val, ok := app.configMap["app_folder"]; ok {
+		return val
+	}
+	return filepath.Join(app.BaseFolder(), "app")
+}
