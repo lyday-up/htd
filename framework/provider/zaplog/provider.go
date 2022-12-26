@@ -33,5 +33,5 @@ func (l *HtdZapServiceProvider) Params(c framework.Container) []interface{} {
 
 // Name 定义对应的服务字符串凭证
 func (l *HtdZapServiceProvider) Name() string {
-	return contract.LogZapKey
+	return contract.ZapLogKey
 }

@@ -26,11 +26,11 @@ import (
 	"testing"
 	"time"
 
-	"go.uber.org/zap/internal/exit"
-	"go.uber.org/zap/internal/ztest"
+	"github.com/htd/framework/zap/internal/exit"
+	"github.com/htd/framework/zap/internal/ztest"
 
 	"github.com/htd/framework/zap/zapcore"
-	"go.uber.org/zap/zaptest/observer"
+	"github.com/htd/framework/zap/zaptest/observer"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

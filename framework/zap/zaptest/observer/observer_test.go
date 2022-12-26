@@ -27,9 +27,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/htd/framework/zap"
 	"github.com/htd/framework/zap/zapcore"
-	"go.uber.org/zap"
-	. "go.uber.org/zap/zaptest/observer"
+	. "github.com/htd/framework/zap/zaptest/observer"
 )
 
 func assertEmpty(t testing.TB, logs *ObservedLogs) {
