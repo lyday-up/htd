@@ -35,6 +35,8 @@ const (
 	// DebugLevel logs are typically voluminous, and are usually disabled in
 	// production.
 	DebugLevel Level = iota - 1
+
+	TraceLevel
 	// InfoLevel is the default logging priority.
 	InfoLevel
 	// WarnLevel logs are more important than Info, but don't need individual

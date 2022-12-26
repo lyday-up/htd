@@ -296,6 +296,5 @@ func (conf *HtdConfig) Load(key string, val interface{}) error {
 	if err != nil {
 		return err
 	}
-
 	return decoder.Decode(conf.find(key))
 }

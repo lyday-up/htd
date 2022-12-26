@@ -15,6 +15,7 @@ const (
 	TraceKeyMethod   = "method"
 	TraceKeyCaller   = "caller"
 	TraceKeyTime     = "time"
+	IDKey            = "htd:id"
 )
 
 // Trace define struct according Google Dapper
@@ -25,6 +26,10 @@ type TraceContext struct {
 	CspanID  string // 子节点调用的SpanID, 由调用方指定
 
 	Annotation map[string]string // 标记各种信息
+}
+
+type IDService interface {
+	NewID() string
 }
 
 type Trace interface {

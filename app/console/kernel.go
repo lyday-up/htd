@@ -29,7 +29,14 @@ func RunCommand(container framework.Container) error {
 	rootCmd.SetContainer(container)
 	// 绑定框架的命令
 	command.AddKernelCommands(rootCmd)
+	// 绑定业务的命令
+	AddAppCommand(rootCmd)
 
 	// 执行RootCommand
 	return rootCmd.Execute()
+}
+
+// 绑定业务的命令
+func AddAppCommand(rootCmd *cobra.Command) {
+
 }

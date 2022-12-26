@@ -153,14 +153,27 @@ func (s *SugaredLogger) Panic(args ...interface{}) {
 	s.log(PanicLevel, "", args, nil)
 }
 
+// Panic uses fmt.Sprint to construct and log a message, then panics.
+func (s *SugaredLogger) Trace(args ...interface{}) {
+	s.log(TraceLevel, "", args, nil)
+}
+
 // Fatal uses fmt.Sprint to construct and log a message, then calls os.Exit.
 func (s *SugaredLogger) Fatal(args ...interface{}) {
 	s.log(FatalLevel, "", args, nil)
 }
 
+func (s *SugaredLogger) SSync() {
+	s.base.Sync()
+}
+
 // Debugf uses fmt.Sprintf to log a templated message.
 func (s *SugaredLogger) Debugf(template string, args ...interface{}) {
 	s.log(DebugLevel, template, args, nil)
+}
+
+func (s *SugaredLogger) Tracef(template string, args ...interface{}) {
+	s.log(TraceLevel, template, args, nil)
 }
 
 // Infof uses fmt.Sprintf to log a templated message.

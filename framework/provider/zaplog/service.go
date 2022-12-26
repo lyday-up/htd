@@ -1,7 +1,6 @@
 package zaplog
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 
@@ -13,9 +12,9 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-// type HtdZapLogService struct {
-// 	*zap.Logger
-// }
+type HtdZapLogService struct {
+	*zap.Logger
+}
 
 func NewHtdZapLog(params ...any) (any, error) {
 
@@ -40,8 +39,6 @@ func NewHtdZapLog(params ...any) (any, error) {
 		file = configService.GetString("log.file")
 	}
 
-	fmt.Println(file)
-	fmt.Println(folder)
 	writeSyncer := getLogWriter(filepath.Join(folder, file))
 	encoder := getTextEncoder()
 	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
@@ -69,3 +66,32 @@ func getTextEncoder() zapcore.Encoder {
 	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
+
+// func (z *HtdZapLogService) Panic(str string, args ...any) {
+// 	z.Sugar().Panicf(str, args...)
+// }
+
+// func (z *HtdZapLogService) Fatal(str string, args ...any) {
+// 	z.Sugar().Fatalf(str, args...)
+
+// }
+// func (z *HtdZapLogService) Debug(str string, args ...any) {
+// 	z.Sugar().Debugf(str, args...)
+// }
+// func (z *HtdZapLogService) Info(str string, args ...any) {
+// 	z.Sugar().Infof(str, args...)
+// }
+// func (z *HtdZapLogService) Warn(str string, args ...any) {
+// 	z.Sugar().Warnf(str, args...)
+// }
+// func (z *HtdZapLogService) Error(str string, args ...any) {
+// 	z.Sugar().Errorf(str, args...)
+// }
+// func (z *HtdZapLogService) Trace(str string, args ...any) {
+// 	z.Sugar().Tracef(str, args...)
+// }
+
+// func (z *HtdZapLogService) SetModle(contract.LogLevel) contract.ZapLoger{
+
+// 	return
+// }
