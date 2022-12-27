@@ -60,6 +60,7 @@ func (api *UserApi) Register(c *gin.Context) {
 	// 	c.ISetStatus(500).IText("发送电子邮件失败")
 	// 	return
 	// }
+	logger.Infof("user %v succeed register", model)
 
 	c.ISetOkStatus().IText("注册成功，请前往邮箱查看邮件")
 	return

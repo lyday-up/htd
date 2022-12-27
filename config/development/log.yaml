@@ -1,0 +1,9 @@
+encoder: json # text | json
+level: debug # panic | fatal | error | debug | info | trace | warn
+
+log_path: /Users/ly/htd/storage/log/ # 日志路径
+log_name: htd.log  #  日志文件的名称
+max_size: 10    # 在进行切割之前，日志文件的最大大小（以 MB 为单位）
+max_backups: 5     # 保留旧文件的最大个数
+max_age: 30    # 保留旧文件的最大天数
+compress: false # 是否压缩

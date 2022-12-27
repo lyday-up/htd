@@ -35,5 +35,6 @@ func (api *UserApi) Verify(c *gin.Context) {
 	}
 
 	// 输出
-	c.IRedirect("/#/login").IText("注册成功，请进入登录页面")
+	// c.IRedirect("/#/login").IText("注册成功，请进入登录页面")
+	c.ISetOkStatus().IText("验证成功")
 }

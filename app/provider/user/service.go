@@ -46,7 +46,7 @@ func (u *UserService) Register(ctx context.Context, user *User) (*User, error) {
 	}
 
 	token := genToken(10)
-	fmt.Print("token", token)
+	fmt.Print("token-->  ", token)
 	user.Token = token
 
 	// 将请求注册进入redis，保存一天
@@ -96,7 +96,7 @@ func (u *UserService) SendRegisterMail(ctx context.Context, user *User) error {
 func (u *UserService) VerifyRegister(ctx context.Context, token string) (bool, error) {
 	// 验证token
 	cacheService := u.container.MustMake(contract.CacheKey).(contract.CacheService)
-	key := fmt.Sprintf("session:%v", token)
+	key := fmt.Sprintf("user:register:%v", token)
 	user := &User{}
 	if err := cacheService.GetObj(ctx, key, user); err != nil {
 		return false, err

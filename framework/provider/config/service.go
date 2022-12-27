@@ -247,6 +247,11 @@ func (conf *HtdConfig) GetInt(key string) int {
 	return cast.ToInt(conf.find(key))
 }
 
+// GetInt8 获取int8类型配置
+func (conf *HtdConfig) GetInt8(key string) int8 {
+	return cast.ToInt8(conf.find(key))
+}
+
 // GetFloat64 get float64
 func (conf *HtdConfig) GetFloat64(key string) float64 {
 	return cast.ToFloat64(conf.find(key))

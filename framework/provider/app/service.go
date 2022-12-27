@@ -159,8 +159,8 @@ func (app *HtdApp) AppFolder() string {
 }
 
 func (app *HtdApp) AppLogEncoder() string {
-	if val, ok := app.configMap["app_folder"]; ok {
+	if val, ok := app.configMap["log_folder"]; ok {
 		return val
 	}
-	return filepath.Join(app.BaseFolder(), "app")
+	return filepath.Join(app.BaseFolder(), "storage")
 }

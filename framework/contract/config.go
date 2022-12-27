@@ -20,6 +20,8 @@ type Config interface {
 	GetBool(key string) bool
 	// GetInt 获取一个int属性
 	GetInt(key string) int
+	// GetInt8 获取一个int8属性
+	GetInt8(key string) int8
 	// GetFloat64 获取一个float64属性
 	GetFloat64(key string) float64
 	// GetTime 获取一个time属性
