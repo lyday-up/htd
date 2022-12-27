@@ -4,8 +4,6 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/htd/framework"
-	"github.com/htd/framework/contract"
 	"github.com/htd/framework/util"
 	"github.com/htd/framework/zap"
 	"github.com/htd/framework/zap/zapcore"
@@ -17,54 +15,64 @@ type HtdZapLogService struct {
 }
 
 func NewHtdZapLog(params ...any) (any, error) {
+	// c := params[0].(framework.Container)
+	logEncoder := params[1].(string)
+	logLevel := params[2].(string)
+	logFile := params[3].(string)
+	maxSize := params[4].(int)
+	maxBackups := params[5].(int)
+	maxAge := params[6].(int)
+	compress := params[7].(bool)
+	logPath := params[8].(string)
 
-	c := params[0].(framework.Container)
-
-	appService := c.MustMake(contract.AppKey).(contract.App)
-	configService := c.MustMake(contract.ConfigKey).(contract.Config)
-
-	// 从配置文件中获取folder信息，否则使用默认的LogFolder文件夹
-	folder := appService.LogFolder()
-	if configService.IsExist("log.folder") {
-		folder = configService.GetString("log.folder")
-	}
 	// 如果folder不存在，则创建
-	if !util.Exists(folder) {
-		os.MkdirAll(folder, os.ModePerm)
+	if !util.Exists(logPath) {
+		os.MkdirAll(logPath, os.ModePerm)
 	}
 
-	// 从配置文件中获取file信息，否则使用默认的hade.log
-	file := "htd.log"
-	if configService.IsExist("log.file") {
-		file = configService.GetString("log.file")
+	fileName := (filepath.Join(logPath, logFile))
+
+	encoderConfig := zap.NewProductionEncoderConfig()
+	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
+	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+	var encoder zapcore.Encoder
+	if logEncoder == "json" {
+		encoder = zapcore.NewJSONEncoder(encoderConfig)
+	} else {
+		encoder = zapcore.NewConsoleEncoder(encoderConfig)
 	}
 
-	writeSyncer := getLogWriter(filepath.Join(folder, file))
-	encoder := getTextEncoder()
-	core := zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+	lumberJackLogger := &lumberjack.Logger{
+		Filename:   fileName,
+		MaxSize:    maxSize,
+		MaxBackups: maxBackups,
+		MaxAge:     maxAge,
+		Compress:   compress,
+	}
+	writeSyncer := zapcore.AddSync(lumberJackLogger)
+	var core zapcore.Core
+
+	switch logLevel {
+	case "debug":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+	case "info":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.InfoLevel)
+	case "warn":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.WarnLevel)
+	case "error":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.ErrorLevel)
+	case "fatal":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.FatalLevel)
+	case "panic":
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.PanicLevel)
+	default:
+		core = zapcore.NewCore(encoder, writeSyncer, zapcore.DebugLevel)
+	}
 
 	logger := zap.New(core, zap.AddCaller())
 	sugarLogger := logger.Sugar()
 
 	return sugarLogger, nil
-}
-
-func getLogWriter(file string) zapcore.WriteSyncer {
-	lumberJackLogger := &lumberjack.Logger{
-		Filename:   file,  // Filename: 日志文件的位置
-		MaxSize:    10,    // MaxSize：在进行切割之前，日志文件的最大大小（以 MB 为单位）
-		MaxBackups: 5,     // MaxBackups：保留旧文件的最大个数
-		MaxAge:     30,    // MaxAges：保留旧文件的最大天数
-		Compress:   false, // Compress：是否压缩 / 归档旧文件
-	}
-	return zapcore.AddSync(lumberJackLogger)
-}
-
-func getTextEncoder() zapcore.Encoder {
-	encoderConfig := zap.NewProductionEncoderConfig()
-	encoderConfig.EncodeTime = zapcore.ISO8601TimeEncoder
-	encoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
 // func (z *HtdZapLogService) Panic(str string, args ...any) {

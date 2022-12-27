@@ -24,7 +24,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			}
 		}
 
-		token, err := c.Cookie("hade_bbs")
+		token, err := c.Cookie("htdapp")
 		if err != nil || token == "" {
 			c.ISetStatus(401).IText("请登录后操作")
 			return
